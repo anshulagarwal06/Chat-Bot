@@ -41,3 +41,7 @@ def productlist(request):
         product = Product.objects.all()
         serializer = ProductSerializer(product, many=True)
         return JSONResponse(serializer.data)
+
+def index(request):
+
+    return HttpResponse('<pre>' + 'Anshul'+ '</pre>')
