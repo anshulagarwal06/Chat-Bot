@@ -8,3 +8,4 @@ virtualenv==15.0.3
 virtualenv-clone==0.2.6
 dj-database-url==0.4.2
 gunicorn==19.6.0
+whitenoise==3.3.0
