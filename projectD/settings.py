@@ -79,8 +79,7 @@ DATABASES = {
         'NAME': 'projectd_database',
         'USER': 'anshul',
         'PASSWORD': 'anshul',
-        'HOST': 'localhost',
-        'PORT': '',
+    
     }
 }
 
