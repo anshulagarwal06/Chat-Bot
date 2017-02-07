@@ -22,10 +22,7 @@ numpy==1.8.1
 pbr==1.10.0
 py2app==0.7.3
 Pygments==2.2.0
-pyobjc-core==2.5.1
-pyOpenSSL==0.13.1
 python-dateutil==1.5
-pytz==2013.7
 requests==2.13.0
 virtualenv==15.0.3
 virtualenv-clone==0.2.6
