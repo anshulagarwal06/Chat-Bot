@@ -72,15 +72,17 @@ WSGI_APPLICATION = 'projectD.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+import dj_database_url
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'projectd_database',
-        'USER': 'anshul',
-        'PASSWORD': 'anshul',
-    
-    }
+'default': dj_database_url.config('DATABASE_URL', engine='django.db.backends.postgresql_psycopg2'),
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'projectd_database',
+    #     'USER': 'anshul',
+    #     'PASSWORD': 'anshul',
+    #
+    # }
 }
 
 
