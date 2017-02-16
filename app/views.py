@@ -51,9 +51,9 @@ def index(request):
 def webhook(request):
     if request.method == 'GET':
 
-        if request.GET.get('mode', '') == 'subscribe' and request.GET.get('verify_token',"") == 'my_first_chat_bot':
+        if request.GET.get('hub.mode', '') == 'subscribe' and request.GET.get('hub.verify_token',"") == 'my_first_chat_bot':
 
-            return HttpResponse(request.GET.get('challenge',''), status=status.HTTP_200_OK)
+            return HttpResponse(request.GET.get('hub.challenge',''), status=status.HTTP_200_OK)
 
             #  return Response(request.GET.get['hub.challenge'], status=status.HTTP_200_OK);
         else:
