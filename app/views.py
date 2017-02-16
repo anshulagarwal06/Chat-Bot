@@ -71,7 +71,7 @@ def sentTextMessage(recipientId, messageText):
     recipient['id'] = recipientId;
 
     message = {}
-    message['text'] = messageText;
+    message['text'] = messageText + "Awesome";
 
     data['message'] = message
     data['recipient'] = recipient;
