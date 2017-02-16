@@ -21,6 +21,7 @@ class JSONResponse(HttpResponse):
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
 
+
 @api_view(['GET', 'POST'])
 def category(request):
     if request.method == 'GET':
@@ -42,6 +43,21 @@ def productlist(request):
         serializer = ProductSerializer(product, many=True)
         return JSONResponse(serializer.data)
 
-def index(request):
 
-    return HttpResponse('<pre>' + 'Anshul'+ '</pre>')
+def index(request):
+    return HttpResponse('<pre>' + 'Anshul' + '</pre>')
+
+
+def webhook(request):
+    if request.method == 'GET':
+
+        if request.GET.get('mode', '') == 'subscribe' and request.GET.get('verify_token',"") == 'my_first_chat_bot':
+
+            return HttpResponse(request.GET.get('challenge',''), status=status.HTTP_200_OK)
+
+            #  return Response(request.GET.get['hub.challenge'], status=status.HTTP_200_OK);
+        else:
+            return HttpResponse("failed", status=status.HTTP_403_FORBIDDEN)
+
+            #request.GET.get['challenge']
+            # return Response(status=status.HTTP_403_FORBIDDEN);
