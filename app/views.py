@@ -7,10 +7,13 @@ from models import Category, Product
 from serializers import CategorySerializer, ProductSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework import status
+import logging;
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 
 # Create your views here.
-
 class JSONResponse(HttpResponse):
     """
     An HttpResponse that renders its content into JSON.
@@ -48,16 +51,40 @@ def index(request):
     return HttpResponse('<pre>' + 'Anshul' + '</pre>')
 
 
+def receivedMessage(event):
+    logger.info("Received message : " + event)
+
+
+@api_view(['GET', 'POST'])
 def webhook(request):
     if request.method == 'GET':
 
-        if request.GET.get('hub.mode', '') == 'subscribe' and request.GET.get('hub.verify_token',"") == 'my_first_chat_bot':
+        if request.GET.get('hub.mode', '') == 'subscribe' and request.GET.get('hub.verify_token',
+                                                                              "") == 'my_first_chat_bot':
 
-            return HttpResponse(request.GET.get('hub.challenge',''), status=status.HTTP_200_OK)
-
-            #  return Response(request.GET.get['hub.challenge'], status=status.HTTP_200_OK);
+            return HttpResponse(request.GET.get('hub.challenge', ''), status=status.HTTP_200_OK)
         else:
             return HttpResponse("failed", status=status.HTTP_403_FORBIDDEN)
 
-            #request.GET.get['challenge']
-            # return Response(status=status.HTTP_403_FORBIDDEN);
+    if request.method == 'POST':
+
+        data = request.body
+        logger.info(" webhook Post - Data : " + data);
+
+        if data.object == 'page':
+
+            for entry in data.entry:
+
+                id = entry.id
+                time = entry.time
+
+                for event in entry.messaging:
+                    if event.message:
+                        receivedMessage(event)
+                    else:
+                        logger.info("Not an message event : " + event)
+
+            return HttpResponse()
+        else :
+            logger.info("Not an page Object : ")
+
