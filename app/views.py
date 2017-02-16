@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
@@ -52,7 +54,7 @@ def index(request):
 
 
 def receivedMessage(event):
-    logger.info("Received message : " + event)
+    logger.info("Received message : ", event["message"]['mid'])
 
 
 @api_view(['GET', 'POST'])
@@ -68,23 +70,27 @@ def webhook(request):
 
     if request.method == 'POST':
 
-        data = request.body
-        logger.info(" webhook Post - Data : " + data);
+        # data = request.body
+        data = json.loads(request.body.decode("utf-8"))
+        print 'anshul'
+        print data
+        logger.info(data)
 
-        if data.object == 'page':
+        logger.debug(" webhook Post - Data : ", data);
 
-            for entry in data.entry:
+        if data["object"] == 'page':
 
-                id = entry.id
-                time = entry.time
+            for entry in data["entry"]:
 
-                for event in entry.messaging:
-                    if event.message:
+                id = entry["id"]
+                time = entry["time"]
+
+                for event in entry["messaging"]:
+                    if event["message"]:
                         receivedMessage(event)
                     else:
                         logger.info("Not an message event : " + event)
 
-            return HttpResponse()
-        else :
+            return HttpResponse(status=status.HTTP_200_OK)
+        else:
             logger.info("Not an page Object : ")
-
