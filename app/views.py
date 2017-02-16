@@ -10,6 +10,7 @@ from serializers import CategorySerializer, ProductSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework import status
 import logging;
+import requests
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -53,8 +54,83 @@ def index(request):
     return HttpResponse('<pre>' + 'Anshul' + '</pre>')
 
 
+def showFoodMenu():
+    pass
+
+
+def callSentAPI(data):
+    url = 'https://graph.facebook.com/v2.6/me/messages'
+    url = url + "?" + "access_token=EAAWS4fk3smoBAIyUdqQbKZCjICHwr2ZAkVhM8oDOyppnZBoJLNeQ5IjeAUrlf5X3jYV0rxvZCs0eZABSH79eCpUBHeosZBPiB3QUYrYAP7kmgwfCS6DfTQZASj05RgmFRcdjSfXaVrpnZChcvQEUH1ZBY9GFCZAJb1g87ie4uBQcNQ1QZDZD"
+    requests.post(url, json=data);
+
+
+def sentTextMessage(recipientId, messageText):
+    data = {}
+    recipient = {};
+
+    recipient['id'] = recipientId;
+
+    message = {}
+    message['text'] = messageText;
+
+    data['message'] = message
+    data['recipient'] = recipient;
+
+    # json_data = json.dumps(data)
+    callSentAPI(data)
+
+
 def receivedMessage(event):
     logger.info("Received message : ", event["message"]['mid'])
+
+    senderId = event["sender"]["id"];
+
+    message = event['message'];
+    messageText = message["text"];
+
+    if messageText == "food":
+        showFoodMenu();
+    else:
+        sentTextMessage(senderId, messageText);
+
+
+# var
+#     senderID = event.sender.id;
+#     var
+#     recipientID = event.recipient.id;
+#     var
+#     timeOfMessage = event.timestamp;
+#     var
+#     message = event.message;
+#
+#     console.log("Received message for user %d and page %d at %d with message:",
+#                 senderID, recipientID, timeOfMessage);
+#     console.log(JSON.stringify(message));
+#
+#     var
+#     messageId = message.mid;
+#
+#     var
+#     messageText = message.text;
+#     var
+#     messageAttachments = message.attachments;
+#
+#     if (messageText) {
+#
+#     // If we receive a text message, check to see if it matches a keyword
+#     // and send back the example.Otherwise, just echo the text we received.
+#     switch (messageText) {
+#     case 'generic':
+#         sendGenericMessage(senderID);
+#         break;
+#
+#     default:
+#     sendTextMessage(senderID, messageText);
+#
+# }
+# } else if (messageAttachments) {
+# sendTextMessage(senderID, "Message with attachment received");
+# }
 
 
 @api_view(['GET', 'POST'])
