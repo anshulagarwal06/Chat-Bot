@@ -89,7 +89,7 @@ def receivedMessage(event):
     messageText = message["text"];
 
     if messageText == "navratan":
-        sentTextMessage(senderId, messageText + ' not');
+        sentTextMessage(senderId, messageText + ' is super awesome');
     elif messageText == "khushboo":
         sentTextMessage(senderId, messageText + " is nautanki.");
     else:
