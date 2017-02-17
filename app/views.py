@@ -71,7 +71,7 @@ def sentTextMessage(recipientId, messageText):
     recipient['id'] = recipientId;
 
     message = {}
-    message['text'] = messageText + "Awesome";
+    message['text'] = messageText;
 
     data['message'] = message
     data['recipient'] = recipient;
@@ -89,9 +89,12 @@ def receivedMessage(event):
     messageText = message["text"];
 
     if messageText == "navratan":
-        sentTextMessage(senderId, messageText + 'not' );
+        sentTextMessage(senderId, messageText + ' not');
+    elif messageText == "khushboo":
+        sentTextMessage(senderId, messageText + " is nautanki.");
     else:
-        sentTextMessage(senderId, messageText);
+        sentTextMessage(senderId, messageText + " awesome");
+
 
 @api_view(['GET', 'POST'])
 def webhook(request):
