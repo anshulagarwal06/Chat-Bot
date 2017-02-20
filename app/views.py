@@ -108,15 +108,16 @@ def sent_store_menu(senderId):
     category1 = Category.objects.all()  # .only('id', 'category_name')
 
     quick_replies = [];
+    message = ""
     for catObject in category1:
         reply = {}
         reply['content_type'] = 'text'
-        reply['title'] = message
+        reply['title'] = catObject.category_name
         reply['payload'] = "category_" + message
         quick_replies.append(reply)
         message = message + catObject.category_name + '\n'
 
-    sentTextMessage(senderId, quick_replies=quick_replies);
+    sentTextMessage(senderId, message, quick_replies=quick_replies);
 
 
 @api_view(['GET', 'POST'])
