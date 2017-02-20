@@ -64,7 +64,7 @@ def callSentAPI(data):
     requests.post(url, json=data);
 
 
-def sentTextMessage(recipientId, messageText, quick_replies):
+def sentTextMessage(recipientId, messageText, quick_replies=None):
     data = {}
     recipient = {};
 
