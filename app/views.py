@@ -64,14 +64,17 @@ def callSentAPI(data):
     requests.post(url, json=data);
 
 
-def sentTextMessage(recipientId, messageText):
+def sentTextMessage(recipientId, messageText, quick_replies):
     data = {}
     recipient = {};
 
     recipient['id'] = recipientId;
 
     message = {}
-    message['text'] = messageText;
+    if messageText:
+        message['text'] = messageText;
+    if quick_replies:
+        message['quick_replies'] = json.dumps(quick_replies)
 
     data['message'] = message
     data['recipient'] = recipient;
@@ -104,11 +107,16 @@ def sent_store_menu(senderId):
 
     category1 = Category.objects.all()  # .only('id', 'category_name')
 
-    message = "";
+    quick_replies = [];
     for catObject in category1:
+        reply = {}
+        reply['content_type'] = 'text'
+        reply['title'] = message
+        reply['payload'] = "category_" + message
+        quick_replies.append(reply)
         message = message + catObject.category_name + '\n'
 
-    sentTextMessage(senderId, message);
+    sentTextMessage(senderId, quick_replies=quick_replies);
 
 
 @api_view(['GET', 'POST'])
