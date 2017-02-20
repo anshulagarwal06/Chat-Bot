@@ -88,12 +88,27 @@ def receivedMessage(event):
     message = event['message'];
     messageText = message["text"];
 
-    if messageText == "navratan":
+    if messageText.lower() == "menu":
+        sent_store_menu(senderId);
+
+    elif messageText == "navratan":
         sentTextMessage(senderId, messageText + ' is super awesome');
     elif messageText == "khushboo":
         sentTextMessage(senderId, messageText + " is nautanki.");
     else:
         sentTextMessage(senderId, messageText + " awesome");
+
+
+def sent_store_menu(senderId):
+    # get all category
+
+    category1 = Category.objects.all()  # .only('id', 'category_name')
+
+    message = "";
+    for catObject in category1:
+        message = message + catObject.category_name + '\n'
+
+    sentTextMessage(senderId, message);
 
 
 @api_view(['GET', 'POST'])
@@ -109,9 +124,7 @@ def webhook(request):
 
     if request.method == 'POST':
 
-        # data = request.body
         data = json.loads(request.body.decode("utf-8"))
-        print 'anshul'
         print data
         logger.info(data)
 
