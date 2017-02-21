@@ -15,6 +15,9 @@ import requests
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
+PAYLOAD_CATEGORY_QUICK_REPLY = "category_"
+PAYLOAD_PRODUCT_QUICK_REPLY = "product_"
+
 
 # Create your views here.
 class JSONResponse(HttpResponse):
@@ -91,6 +94,8 @@ def receivedMessage(event):
     message = event['message'];
     messageText = message["text"];
 
+    if is_from_quick_reply(senderId, message):
+        pass
     if messageText.lower() == "menu":
         sent_store_menu(senderId);
 
@@ -100,6 +105,48 @@ def receivedMessage(event):
         sentTextMessage(senderId, messageText + " is nautanki.");
     else:
         sentTextMessage(senderId, messageText + " awesome");
+
+
+def is_from_quick_reply(sender_id, message):
+    if message['quick_reply']:
+
+        quick_reply = message['quick_reply']
+
+        if is_category_quick_reply(sender_id, message, quick_reply):
+            return True;
+        else:
+            return False;
+
+
+    else:
+        return False;
+    pass
+
+
+def is_category_quick_reply(sender_id, message, quick_reply):
+    if quick_reply['payload']:
+        payload = quick_reply['payload'];
+        if payload.startswith(PAYLOAD_CATEGORY_QUICK_REPLY, 0):
+            split_array = PAYLOAD_CATEGORY_QUICK_REPLY.split("_");
+            catergory_id = split_array[1]
+            sent_category_product_list(sender_id, catergory_id);
+            return True
+    return False;
+
+
+def sent_category_product_list(sender_id, catergory_id):
+    product = Product.objects.get(Category=catergory_id);
+    quick_replies = [];
+    message = ""
+    for product_object in product:
+        reply = {}
+        reply['content_type'] = 'text'
+        reply['title'] = product_object.product_name
+        reply['payload'] = PAYLOAD_PRODUCT_QUICK_REPLY + product_object.id
+        quick_replies.append(reply)
+        message = message + product_object.product_name + '\n'
+
+    sentTextMessage(sender_id, message, quick_replies=quick_replies);
 
 
 def sent_store_menu(senderId):
@@ -113,7 +160,7 @@ def sent_store_menu(senderId):
         reply = {}
         reply['content_type'] = 'text'
         reply['title'] = catObject.category_name
-        reply['payload'] = "category_" + message
+        reply['payload'] = PAYLOAD_CATEGORY_QUICK_REPLY + catObject.id
         quick_replies.append(reply)
         message = message + catObject.category_name + '\n'
 
