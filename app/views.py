@@ -108,7 +108,7 @@ def receivedMessage(event):
 
 
 def is_from_quick_reply(sender_id, message):
-    if message['quick_reply']:
+    if 'quick_reply' in message:
 
         quick_reply = message['quick_reply']
 
@@ -120,7 +120,6 @@ def is_from_quick_reply(sender_id, message):
 
     else:
         return False;
-    pass
 
 
 def is_category_quick_reply(sender_id, message, quick_reply):
