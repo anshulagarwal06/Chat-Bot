@@ -57,10 +57,6 @@ def index(request):
     return HttpResponse('<pre>' + 'Anshul' + '</pre>')
 
 
-def showFoodMenu():
-    pass
-
-
 def callSentAPI(data):
     url = 'https://graph.facebook.com/v2.6/me/messages'
     url = url + "?" + "access_token=EAAWS4fk3smoBAIyUdqQbKZCjICHwr2ZAkVhM8oDOyppnZBoJLNeQ5IjeAUrlf5X3jYV0rxvZCs0eZABSH79eCpUBHeosZBPiB3QUYrYAP7kmgwfCS6DfTQZASj05RgmFRcdjSfXaVrpnZChcvQEUH1ZBY9GFCZAJb1g87ie4uBQcNQ1QZDZD"
@@ -135,7 +131,7 @@ def is_category_quick_reply(sender_id, message, quick_reply):
 
 
 def sent_category_product_list(sender_id, catergory_id):
-    product = Product.objects.get(Category=catergory_id);
+    product = Product.objects.filter(Category=catergory_id).all();
     quick_replies = [];
     message = ""
     for product_object in product:
@@ -150,7 +146,7 @@ def sent_category_product_list(sender_id, catergory_id):
 
 
 def sent_store_menu(senderId):
-    # get all category
+    # get all categoryse
 
     category1 = Category.objects.all()  # .only('id', 'category_name')
 
