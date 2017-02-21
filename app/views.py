@@ -141,7 +141,7 @@ def sent_category_product_list(sender_id, catergory_id):
         reply = {}
         reply['content_type'] = 'text'
         reply['title'] = product_object.product_name
-        reply['payload'] = PAYLOAD_PRODUCT_QUICK_REPLY + product_object.id
+        reply['payload'] = PAYLOAD_PRODUCT_QUICK_REPLY + str(product_object.id)
         quick_replies.append(reply)
         message = message + product_object.product_name + '\n'
 
@@ -159,7 +159,7 @@ def sent_store_menu(senderId):
         reply = {}
         reply['content_type'] = 'text'
         reply['title'] = catObject.category_name
-        reply['payload'] = PAYLOAD_CATEGORY_QUICK_REPLY + catObject.id
+        reply['payload'] = PAYLOAD_CATEGORY_QUICK_REPLY + str(catObject.id)
         quick_replies.append(reply)
         message = message + catObject.category_name + '\n'
 
