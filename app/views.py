@@ -127,6 +127,7 @@ def is_category_quick_reply(sender_id, message, quick_reply):
         payload = quick_reply['payload'];
         if payload.startswith(PAYLOAD_CATEGORY_QUICK_REPLY, 0):
             split_array = PAYLOAD_CATEGORY_QUICK_REPLY.split("_");
+            print split_array[0] + split_array[1]
             catergory_id = split_array[1]
             sent_category_product_list(sender_id, catergory_id);
             return True
