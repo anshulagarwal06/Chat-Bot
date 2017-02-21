@@ -92,7 +92,7 @@ def receivedMessage(event):
 
     if is_from_quick_reply(senderId, message):
         pass
-    if messageText.lower() == "menu":
+    elif messageText.lower() == "menu":
         sent_store_menu(senderId);
 
     elif messageText == "navratan":
