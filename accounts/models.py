@@ -31,20 +31,24 @@ def fetch_customers_details(user_id):
         url = "https://graph.facebook.com/v2.6/" + user_id + "?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=my_first_chat_bot"
         response = requests.get(url);
         json_data = response.json();
+        print " Profile json_data" + str(json_data);
+        if 'first_name' in json_data :
+            name = json_data['first_name'] + " " + json_data["last_name"]
+            profile_picture = json_data['profile_pic']
+            fb_id = user_id;
+            model_format = {};
+            model_format[name] = name
+            model_format[fb_id] = fb_id
+            model_format[profile_picture] = profile_picture
+            from accounts.account_serializers import CustomersSerializer
 
-        name = json_data['first_name'] + " " + json_data["first_name"]
-        profile_picture = json_data['profile_pic']
-        fb_id = user_id;
-        model_format = {};
-        model_format[name] = name
-        model_format[fb_id] = fb_id
-        model_format[profile_picture] = profile_picture
-        from accounts.account_serializers import CustomersSerializer
+            serializer = CustomersSerializer(data=model_format);
+            if serializer.is_valid():
+                serializer.save();
+            else:
+                print 'customer data save error';
+        else :
+            print " Empty data from fb"
 
-        serializer = CustomersSerializer(data=model_format);
-        if serializer.is_valid():
-            serializer.save();
-        else:
-            print 'customer data save error';
     else:
         print customer.__str__();
