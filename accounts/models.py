@@ -24,7 +24,7 @@ class Customers(models.Model):
 def fetch_customers_details(user_id):
     try:
         customer = Customers.objects.get(fb_id=user_id)
-    except customer.DoesNotExist:
+    except Customers.DoesNotExist:
         customer = None
 
     if customer is None:
