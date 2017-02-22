@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import json
+
 from django.db import models
 
 # Create your models here.
@@ -32,7 +34,7 @@ def fetch_customers_details(user_id):
         response = requests.get(url);
         json_data = response.json();
         print " Profile json_data" + str(json_data);
-        if 'first_name' in json_data :
+        if 'first_name' in json_data:
             name = json_data['first_name'] + " " + json_data["last_name"]
             profile_picture = json_data['profile_pic']
             fb_id = user_id;
@@ -40,14 +42,15 @@ def fetch_customers_details(user_id):
             model_format[name] = name
             model_format[fb_id] = fb_id
             model_format[profile_picture] = profile_picture
+
             from accounts.account_serializers import CustomersSerializer
 
-            serializer = CustomersSerializer(data=model_format);
+            serializer = CustomersSerializer(data=json.dumps(model_format));
             if serializer.is_valid():
                 serializer.save();
             else:
                 print 'customer data save error';
-        else :
+        else:
             print " Empty data from fb"
 
     else:

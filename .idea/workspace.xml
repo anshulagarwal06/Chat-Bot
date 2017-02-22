@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="43842b5c-86f9-4ed6-b54b-12d835dc27f9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/accounts/account_serializers.py" afterPath="$PROJECT_DIR$/accounts/account_serializers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/accounts/models.py" afterPath="$PROJECT_DIR$/accounts/models.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -53,11 +53,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/accounts/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="8" />
+            <state relative-caret-position="495">
+              <caret line="45" column="13" lean-forward="false" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -65,21 +65,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="serializers.py" pinned="false" current-in-tab="false">
-        <entry file="file:///Library/Python/2.7/site-packages/rest_framework/serializers.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-336">
-              <caret line="223" column="18" lean-forward="true" selection-start-line="223" selection-start-column="18" selection-end-line="223" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="477">
-              <caret line="194" column="84" lean-forward="false" selection-start-line="194" selection-start-column="84" selection-end-line="194" selection-end-column="84" />
+            <state relative-caret-position="216">
+              <caret line="76" column="39" lean-forward="false" selection-start-line="76" selection-start-column="35" selection-end-line="76" selection-end-column="39" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -87,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="account_serializers.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="account_serializers.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/accounts/account_serializers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="77" lean-forward="false" selection-start-line="7" selection-start-column="77" selection-end-line="7" selection-end-column="77" />
+            <state relative-caret-position="120">
+              <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -135,6 +125,7 @@
       <find>messaging</find>
       <find>DJANGO_LOG_LEVEL</find>
       <find>requests</find>
+      <find>json</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -155,9 +146,9 @@
         <option value="$PROJECT_DIR$/projectD/settings.py" />
         <option value="$PROJECT_DIR$/accounts/admin.py" />
         <option value="$PROJECT_DIR$/app/views.py" />
-        <option value="$PROJECT_DIR$/accounts/models.py" />
         <option value="$PROJECT_DIR$/app/serializers.py" />
         <option value="$PROJECT_DIR$/accounts/account_serializers.py" />
+        <option value="$PROJECT_DIR$/accounts/models.py" />
       </list>
     </option>
   </component>
@@ -1090,7 +1081,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1487761315000" expanded="true" signature="59:68635" ph="..." />
+            <marker date="1487761747000" expanded="true" signature="59:68060" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1191,16 +1182,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="194" column="84" lean-forward="false" selection-start-line="194" selection-start-column="84" selection-end-line="194" selection-end-column="84" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Python/2.7/site-packages/requests/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="251">
@@ -1217,16 +1198,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -1239,10 +1210,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/accounts/account_serializers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="77" lean-forward="false" selection-start-line="7" selection-start-column="77" selection-end-line="7" selection-end-column="77" />
+        <state relative-caret-position="120">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="76" column="39" lean-forward="false" selection-start-line="76" selection-start-column="35" selection-end-line="76" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="45" column="13" lean-forward="false" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
