@@ -22,7 +22,11 @@ class Customers(models.Model):
 
 
 def fetch_customers_details(user_id):
-    customer = Customers.objects.get(fb_id=user_id)
+    try:
+        customer = Customers.objects.get(fb_id=user_id)
+    except customer.DoesNotExist:
+        customer = None
+
     if customer is None:
         url = "https://graph.facebook.com/v2.6/" + user_id + "?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=my_first_chat_bot"
         response = requests.get(url);
@@ -42,7 +46,5 @@ def fetch_customers_details(user_id):
             serializer.save();
         else:
             print 'customer data save error';
-
-        pass
     else:
         print customer.__str__();
