@@ -1,12 +1,8 @@
 from __future__ import unicode_literals
 
-import json
-
-from django.db import models
-
-# Create your models here.
-from django.utils.encoding import python_2_unicode_compatible
 import requests
+from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 
 
 @python_2_unicode_compatible
@@ -41,20 +37,11 @@ def fetch_customers_details(user_id):
 
             customer = Customers(name=name, profile_picture=profile_picture, fb_id=fb_id)
             customer.save();
-            # model_format = {};
-            # model_format[name] = name
-            # model_format[fb_id] = fb_id
-            # model_format[profile_picture] = profile_picture
-            #
-            # from accounts.account_serializers import CustomersSerializer
-            #
-            # serializer = CustomersSerializer(data=json.dumps(model_format));
-            # if serializer.is_valid():
-            #     serializer.save();
-            # else:
-            #     print 'customer data save error';
+            return customer;
         else:
             print " Empty data from fb"
+            return None
 
     else:
         print customer.__str__();
+        return customer;
