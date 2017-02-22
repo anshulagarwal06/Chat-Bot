@@ -192,7 +192,7 @@ def webhook(request):
 
                 for event in entry["messaging"]:
                     if 'sender' in event:
-                        accounts.models.fetch_customers_details(event['sender'][id]);
+                        accounts.models.fetch_customers_details(event['sender']['id']);
                     if event["message"]:
                         receivedMessage(event)
                     else:
