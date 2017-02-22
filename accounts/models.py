@@ -38,18 +38,21 @@ def fetch_customers_details(user_id):
             name = json_data['first_name'] + " " + json_data["last_name"]
             profile_picture = json_data['profile_pic']
             fb_id = user_id;
-            model_format = {};
-            model_format[name] = name
-            model_format[fb_id] = fb_id
-            model_format[profile_picture] = profile_picture
 
-            from accounts.account_serializers import CustomersSerializer
-
-            serializer = CustomersSerializer(data=json.dumps(model_format));
-            if serializer.is_valid():
-                serializer.save();
-            else:
-                print 'customer data save error';
+            customer = Customers(name=name, profile_picture=profile_picture, fb_id=fb_id)
+            customer.save();
+            # model_format = {};
+            # model_format[name] = name
+            # model_format[fb_id] = fb_id
+            # model_format[profile_picture] = profile_picture
+            #
+            # from accounts.account_serializers import CustomersSerializer
+            #
+            # serializer = CustomersSerializer(data=json.dumps(model_format));
+            # if serializer.is_valid():
+            #     serializer.save();
+            # else:
+            #     print 'customer data save error';
         else:
             print " Empty data from fb"
 
