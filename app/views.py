@@ -11,6 +11,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework import status
 import logging;
 import requests
+import accounts.models;
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -190,6 +191,8 @@ def webhook(request):
                 time = entry["time"]
 
                 for event in entry["messaging"]:
+                    if 'sender' in event:
+                        accounts.models.fetch_customers_details(event['sender'][id]);
                     if event["message"]:
                         receivedMessage(event)
                     else:
