@@ -19,21 +19,21 @@ class Customers(models.Model):
                'profile_picture : ' + self.profile_picture + 'fb_id : ' + self.fb_id
 
 
-def fetch_customers_details(user_id):
+def fetch_customers_details(sender_id):
     try:
-        customer = Customers.objects.get(fb_id=user_id)
+        customer = Customers.objects.get(fb_id=sender_id)
     except Customers.DoesNotExist:
         customer = None
 
     if customer is None:
-        url = "https://graph.facebook.com/v2.6/" + user_id + "?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=EAAWS4fk3smoBAIyUdqQbKZCjICHwr2ZAkVhM8oDOyppnZBoJLNeQ5IjeAUrlf5X3jYV0rxvZCs0eZABSH79eCpUBHeosZBPiB3QUYrYAP7kmgwfCS6DfTQZASj05RgmFRcdjSfXaVrpnZChcvQEUH1ZBY9GFCZAJb1g87ie4uBQcNQ1QZDZD"
+        url = "https://graph.facebook.com/v2.6/" + sender_id + "?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=EAAWS4fk3smoBAIyUdqQbKZCjICHwr2ZAkVhM8oDOyppnZBoJLNeQ5IjeAUrlf5X3jYV0rxvZCs0eZABSH79eCpUBHeosZBPiB3QUYrYAP7kmgwfCS6DfTQZASj05RgmFRcdjSfXaVrpnZChcvQEUH1ZBY9GFCZAJb1g87ie4uBQcNQ1QZDZD"
         response = requests.get(url);
         json_data = response.json();
         print " Profile json_data" + str(json_data);
         if 'first_name' in json_data:
             name = json_data['first_name'] + " " + json_data["last_name"]
             profile_picture = json_data['profile_pic']
-            fb_id = user_id;
+            fb_id = sender_id;
 
             customer = Customers(name=name, profile_picture=profile_picture, fb_id=fb_id)
             customer.save();
@@ -43,5 +43,5 @@ def fetch_customers_details(user_id):
             return None
 
     else:
-        print customer.__str__();
+        print "Customer already added : "+customer.__str__();
         return customer;

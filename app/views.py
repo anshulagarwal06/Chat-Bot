@@ -12,6 +12,7 @@ from rest_framework import status
 import logging;
 import requests
 import accounts.models;
+import cart.models as cart_models;
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -111,6 +112,8 @@ def is_from_quick_reply(sender_id, message):
 
         if is_category_quick_reply(sender_id, message, quick_reply):
             return True;
+        elif is_product_quick_reply(sender_id, message, quick_reply):
+            return True;
         else:
             return False;
 
@@ -131,6 +134,18 @@ def is_category_quick_reply(sender_id, message, quick_reply):
     return False;
 
 
+def is_product_quick_reply(sender_id, message, quick_reply):
+    if quick_reply['payload']:
+        payload = quick_reply['payload'];
+        if payload.startswith(PAYLOAD_PRODUCT_QUICK_REPLY, 0):
+            split_array = payload.split("_");
+            print "Product quick " + split_array[0] + split_array[1]
+            product_id = split_array[1]
+            add_product_to_cart(sender_id, product_id);
+            return True
+    return False;
+
+
 def sent_category_product_list(sender_id, catergory_id):
     product = Product.objects.filter(Category=catergory_id).all();
     quick_replies = [];
@@ -146,8 +161,36 @@ def sent_category_product_list(sender_id, catergory_id):
     sentTextMessage(sender_id, message, quick_replies=quick_replies);
 
 
+def add_product_to_cart(sender_id, product_id, quantity=1):
+    # get product object
+    product = Product.objects.get(id=product_id);
+
+    # get user from sender_id:
+    user = accounts.models.fetch_customers_details(sender_id);
+
+    # get user cart
+    # delete check will be added later
+    cart = cart_models.get_user_cart(user_id=user.id)
+
+    # create cart line item
+
+    cart_models.add_product_to_cartline(cart.id, product.id, quantity)
+
+
+   # quick_replies = [];
+    message = "Successfull added."
+    # reply = {}
+    # reply['content_type'] = 'text'
+    # reply['title'] = product.product_name
+    # reply['payload'] = PAYLOAD_PRODUCT_QUICK_REPLY + str(product.id)
+    # quick_replies.append(reply)
+    # message = message + product.product_name + '\n'
+
+    sentTextMessage(sender_id, message);
+
+
 def sent_store_menu(senderId):
-    # get all categoryse
+    # get all categorise
 
     category1 = Category.objects.all()  # .only('id', 'category_name')
 
