@@ -226,7 +226,8 @@ def show_user_cart(sender_id):
         quantity = items.quantity;
         price = item_price * quantity
 
-        message = message + count + ". " + name + "\t" + str(quantity) + "*" + str(item_price) + '\t' ;
+        message = message + str(count) + ". " + name + "\t" + str(quantity) + "*" + str(item_price) + '\t' + str(
+            int(price)) + "\n"
 
     sentTextMessage(sender_id, message);
 
