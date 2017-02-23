@@ -96,7 +96,8 @@ def receivedMessage(event):
         pass
     elif messageText.lower() == "menu":
         sent_store_menu(senderId);
-
+    elif messageText.lower() == "cart":
+        show_user_cart(senderId)
     elif messageText == "navratan":
         sentTextMessage(senderId, messageText + ' is super awesome');
     elif messageText == "khushboo":
@@ -176,8 +177,7 @@ def add_product_to_cart(sender_id, product_id, quantity=1):
 
     cart_models.add_product_to_cartline(cart, product, quantity)
 
-
-   # quick_replies = [];
+    # quick_replies = [];
     message = "Successfull added."
     # reply = {}
     # reply['content_type'] = 'text'
@@ -205,6 +205,30 @@ def sent_store_menu(senderId):
         message = message + catObject.category_name + '\n'
 
     sentTextMessage(senderId, message, quick_replies=quick_replies);
+
+
+def show_user_cart(sender_id):
+    # get customer object
+    customer = accounts.models.fetch_customers_details(sender_id)
+
+    # get customer cart
+    cart = cart_models.get_user_cart(customer);
+
+    # get all cart items
+    cart_lines = cart_models.get_cart_line_items(cart)
+
+    message = " Cart details " + '\n'
+    count = 1;
+    for items in cart_lines:
+        product = Product.objects.get(items.product_id);
+        name = product.product_name;
+        price = product.price;
+        quantity = items.quantity;
+
+        message = message + count + ". " + name + "\t" + str(quantity) + "*" + str(price) + '\t' + str(
+            quantity * price) + '\n';
+
+    sentTextMessage(sender_id,message);
 
 
 @api_view(['GET', 'POST'])

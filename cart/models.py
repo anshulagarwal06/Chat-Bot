@@ -33,3 +33,11 @@ def add_product_to_cartline(cart, product, quantity):
     # added product check;
     cart_line = CartLine(cart_id=cart, product_id=product, quantity=quantity);
     cart_line.save();
+
+def get_cart_line_items(cart):
+
+    items = CartLine.objects.filter(cart_id=cart);
+    return items
+
+    # cart_line = CartLine(cart_id=cart, product_id=product, quantity=quantity);
+    # cart_line.save();
