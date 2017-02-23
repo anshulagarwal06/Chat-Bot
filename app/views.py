@@ -97,10 +97,6 @@ def receivedMessage(event):
         sent_store_menu(senderId);
     elif messageText.lower() == "cart":
         show_user_cart(senderId)
-    elif messageText == "navratan":
-        sentTextMessage(senderId, messageText + ' is super awesome');
-    elif messageText == "khushboo":
-        sentTextMessage(senderId, messageText + " is nautanki.");
     else:
         sentTextMessage(senderId, messageText + " awesome");
 
