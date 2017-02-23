@@ -12,7 +12,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -23,7 +22,6 @@ SECRET_KEY = '_y%=+u&68dh8g!hj@du_)b=p&6045=a=!xf-=q4vu=zfy4zq@h'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*'];
-
 
 # Application definition
 
@@ -37,7 +35,7 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',
     'rest_framework',
     'accounts.apps.AccountsConfig',
-
+    'cart.apps.CartConfig'
 
 ]
 
@@ -71,13 +69,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'projectD.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 import dj_database_url
 
 DATABASES = {
-'default': dj_database_url.config('DATABASE_URL', engine='django.db.backends.postgresql_psycopg2'),
+    'default': dj_database_url.config('DATABASE_URL', engine='django.db.backends.postgresql_psycopg2'),
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #     'NAME': 'projectd_database',
@@ -86,7 +83,6 @@ DATABASES = {
     #
     # }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -106,7 +102,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -119,7 +114,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
