@@ -30,12 +30,16 @@ def get_user_cart(customer):
 
 
 def add_product_to_cartline(cart, product, quantity):
-    # added product check;
-    cart_line = CartLine(cart_id=cart, product_id=product, quantity=quantity);
-    cart_line.save();
+    try:
+        cart_line = CartLine.objects.get(cart_id=cart, product_id=product)
+        cart_line.quantity = cart_line.quantity + quantity;
+        cart_line.save();
+    except CartLine.DoesNotExist:
+        cart_line = CartLine(cart_id=cart, product_id=product, quantity=quantity);
+        cart_line.save();
+
 
 def get_cart_line_items(cart):
-
     items = CartLine.objects.filter(cart_id=cart);
     return items
 

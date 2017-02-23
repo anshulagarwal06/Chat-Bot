@@ -1,18 +1,17 @@
 import json
+import logging;
 
-from django.shortcuts import render
+import requests
 from django.http import HttpResponse
+from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
-from models import Category, Product
-from serializers import CategorySerializer, ProductSerializer
-from rest_framework.renderers import JSONRenderer
-from rest_framework import status
-import logging;
-import requests
 import accounts.models;
 import cart.models as cart_models;
+from models import Category, Product
+from serializers import CategorySerializer, ProductSerializer
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -217,8 +216,9 @@ def show_user_cart(sender_id):
     # get all cart items
     cart_lines = cart_models.get_cart_line_items(cart)
 
-    message = " Cart details " + '\n'
+    message = " Cart details -" + '\n\n'
     count = 1;
+    total_price = 0
     for items in cart_lines:
         product = Product.objects.get(id=items.product_id.id);
         name = product.product_name;
@@ -229,9 +229,10 @@ def show_user_cart(sender_id):
         message = message + str(count) + ". " + name + "\t\t" + str(quantity) + "*" + str(item_price) + '\t\t' + str(
             int(price)) + "\n\n"
 
+        total_price = total_price + price;
         count += 1
 
-
+    message = message + "Total" + '\t\t\t' + str(total_price)
     sentTextMessage(sender_id, message);
 
 
