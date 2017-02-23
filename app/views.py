@@ -222,11 +222,12 @@ def show_user_cart(sender_id):
     for items in cart_lines:
         product = Product.objects.get(id=items.product_id.id);
         name = product.product_name;
-        price = product.price;
+        item_price = product.price;
         quantity = items.quantity;
+        price = item_price * quantity
 
-        message = message + count + ". " + name + "\t" + str(quantity) + "*" + str(price) + '\t' + str(
-            quantity * price) + '\n';
+        message = message + count + ". " + name + "\t" + str(quantity) + "*" + str(item_price) + '\t' + str(
+            price) + '\n';
 
     sentTextMessage(sender_id, message);
 
