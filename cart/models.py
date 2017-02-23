@@ -20,16 +20,16 @@ class CartLine(models.Model):
     quantity = models.IntegerField(blank=False);
 
 
-def get_user_cart(user_id):
+def get_user_cart(customer):
     try:
-        cart = Cart.objects.get(user_id=user_id)
+        cart = Cart.objects.get(user_id=customer)
     except Cart.DoesNotExist:
-        cart = Cart(user_id=user_id)
+        cart = Cart(user_id=customer)
         cart.save()
     return cart
 
 
-def add_product_to_cartline(cart_id, product_id, quantity):
+def add_product_to_cartline(cart, product, quantity):
     # added product check;
-    cart_line = CartLine(cart_id=cart_id, product_id=product_id, quantity=quantity);
+    cart_line = CartLine(cart_id=cart, product_id=product, quantity=quantity);
     cart_line.save();

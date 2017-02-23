@@ -166,15 +166,15 @@ def add_product_to_cart(sender_id, product_id, quantity=1):
     product = Product.objects.get(id=product_id);
 
     # get user from sender_id:
-    user = accounts.models.fetch_customers_details(sender_id);
+    customer = accounts.models.fetch_customers_details(sender_id);
 
     # get user cart
     # delete check will be added later
-    cart = cart_models.get_user_cart(user_id=user.id)
+    cart = cart_models.get_user_cart(customer=customer)
 
     # create cart line item
 
-    cart_models.add_product_to_cartline(cart.id, product.id, quantity)
+    cart_models.add_product_to_cartline(cart, product, quantity)
 
 
    # quick_replies = [];
