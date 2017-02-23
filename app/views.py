@@ -220,7 +220,7 @@ def show_user_cart(sender_id):
     message = " Cart details " + '\n'
     count = 1;
     for items in cart_lines:
-        product = Product.objects.get(id=items.product_id);
+        product = Product.objects.get(id=items.product_id.id);
         name = product.product_name;
         price = product.price;
         quantity = items.quantity;
