@@ -220,7 +220,7 @@ def show_user_cart(sender_id):
     message = " Cart details " + '\n'
     count = 1;
     for items in cart_lines:
-        product = Product.objects.get(items.product_id);
+        product = Product.objects.get(id=items.product_id);
         name = product.product_name;
         price = product.price;
         quantity = items.quantity;
@@ -228,7 +228,7 @@ def show_user_cart(sender_id):
         message = message + count + ". " + name + "\t" + str(quantity) + "*" + str(price) + '\t' + str(
             quantity * price) + '\n';
 
-    sentTextMessage(sender_id,message);
+    sentTextMessage(sender_id, message);
 
 
 @api_view(['GET', 'POST'])
