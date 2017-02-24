@@ -22,7 +22,7 @@ class CustomerAddress(models.Model):
     default = models.BooleanField(default=False)
 
     def create_customer_address(self):
-        customer_addresses = CustomerAddress.objects.filter(user=self.user, default=True)
+        customer_addresses = CustomerAddress.objects.filter(customers_id=self.user.id, default=True)
 
         for customer_address in customer_addresses:
             customer_address.default = False
