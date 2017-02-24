@@ -97,6 +97,8 @@ def receivedMessage(event):
         sent_store_menu(senderId);
     elif messageText.lower() == "cart":
         show_user_cart(senderId)
+    elif messageText.lower() == 'location':
+        fetch_customer_location(senderId)
     else:
         sentTextMessage(senderId, messageText + " awesome");
 
@@ -230,6 +232,15 @@ def show_user_cart(sender_id):
 
     message = message + "Total" + '\t\t\t' + str(total_price)
     sentTextMessage(sender_id, message);
+
+
+def fetch_customer_location(sender_id):
+    quick_replies = [];
+    message = "Please share your location:"
+    reply = {}
+    reply['content_type'] = 'location'
+    quick_replies.append(reply)
+    sentTextMessage(sender_id, message, quick_replies=quick_replies);
 
 
 @api_view(['GET', 'POST'])
