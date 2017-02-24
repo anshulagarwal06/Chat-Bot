@@ -12,6 +12,7 @@ import accounts.models;
 import cart.models as cart_models;
 from models import Category, Product
 from serializers import CategorySerializer, ProductSerializer
+from address.models import Addresses, CustomerAddress
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -271,10 +272,17 @@ def handle_customer_location(sender_id, message, attachment):
     coordinates = attachment['payload']['coordinates'];
     lat = coordinates['lat']
     longitude = coordinates['long'];
+    title = coordinates['title']
+
+    address = Addresses(title=title, latitude=lat, longitude=longitude);
+    address.save();
+
+    # get user
+    customer = accounts.models.fetch_customers_details(sender_id);
+    customer_address = CustomerAddress(user_id=customer, address=address);
+    customer_address.create_customer_address();
 
     print "lat : " + str(lat) + "longitude : " + str(longitude)
-
-
 
 
 @api_view(['GET', 'POST'])
