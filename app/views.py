@@ -272,7 +272,7 @@ def handle_customer_location(sender_id, message, attachment):
     coordinates = attachment['payload']['coordinates'];
     lat = coordinates['lat']
     longitude = coordinates['long'];
-    title = coordinates['title']
+    title = attachment['title']
 
     address = Addresses(title=title, latitude=lat, longitude=longitude);
     address.save();
