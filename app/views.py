@@ -89,11 +89,17 @@ def receivedMessage(event):
     senderId = event["sender"]["id"];
 
     message = event['message'];
-    messageText = message["text"];
-
     if is_from_quick_reply(senderId, message):
-        pass
-    elif messageText.lower() == "menu":
+        return;
+    elif is_has_attachment(senderId, message):
+        return;
+
+    if 'text' in message:
+        messageText = message["text"];
+    else:
+        return
+
+    if messageText.lower() == "menu":
         sent_store_menu(senderId);
     elif messageText.lower() == "cart":
         show_user_cart(senderId)
@@ -241,6 +247,36 @@ def fetch_customer_location(sender_id):
     reply['content_type'] = 'location'
     quick_replies.append(reply)
     sentTextMessage(sender_id, message, quick_replies=quick_replies);
+
+
+def is_has_attachment(sender_id, message):
+    if 'attachments' in message:
+
+        attachments = message['attachments']
+
+        for attachment in attachments:
+            handle_attachment(sender_id, message, attachment)
+        return True
+    else:
+        return False
+
+
+def handle_attachment(sender_id, message, attachment):
+    type = attachment['type'];
+    if type == "location":
+        handle_customer_location(sender_id, message, attachment)
+
+
+def handle_customer_location(sender_id, message, attachment):
+    coordinates = attachment['payload']['coordinates'];
+    lat = coordinates['lat']
+    longitude = coordinates['long'];
+
+    print "lat : " + str(lat) + "longitude : " + str(longitude)
+
+
+
+
 
 
 @api_view(['GET', 'POST'])
