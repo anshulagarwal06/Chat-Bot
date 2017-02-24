@@ -35,7 +35,9 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',
     'rest_framework',
     'accounts.apps.AccountsConfig',
-    'cart.apps.CartConfig'
+    'cart.apps.CartConfig',
+    'store.apps.StoreConfig',
+    'address.apps.AddressConfig'
 
 ]
 

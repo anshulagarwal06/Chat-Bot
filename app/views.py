@@ -277,8 +277,6 @@ def handle_customer_location(sender_id, message, attachment):
 
 
 
-
-
 @api_view(['GET', 'POST'])
 def webhook(request):
     if request.method == 'GET':
