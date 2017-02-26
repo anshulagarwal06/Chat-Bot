@@ -14,6 +14,9 @@ class Addresses(models.Model):
     address = models.CharField(max_length=200, blank=True);
     create_at = models.DateTimeField(auto_now_add=True);
 
+    def __str__(self):
+        return self.title
+
 
 class CustomerAddress(models.Model):
     user = models.ForeignKey(Customers, on_delete=models.CASCADE);
@@ -30,3 +33,6 @@ class CustomerAddress(models.Model):
 
         self.default = True;
         self.save();
+
+    def __str__(self):
+        return self.user.name

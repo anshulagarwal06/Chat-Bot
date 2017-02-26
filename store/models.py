@@ -34,6 +34,8 @@ def get_stores(lat, longitude):
 
     store_list = [];
     for s_address in store_address:
+        print "Store : " + s_address.store.name
+
         s_lat = s_address.address.latitude
         s_long = s_address.address.longitude
         store_loc = (s_lat, s_long)

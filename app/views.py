@@ -308,6 +308,7 @@ def show_nearby_stores(sender_id, stores):
         sentTextMessage(sender_id, message, quick_replies=q_reply);
 
     else:
+        print stores;
         sent_no_store_found(sender_id)
 
 
