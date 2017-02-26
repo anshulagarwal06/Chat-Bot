@@ -32,7 +32,7 @@ def get_stores(lat, longitude):
     store_address = StoreAddress.objects.all();
     customer_loc = (lat, longitude);
 
-    store_list = None;
+    store_list = [];
     for s_address in store_address:
         s_lat = s_address.address.latitude
         s_long = s_address.address.longitude
@@ -42,4 +42,5 @@ def get_stores(lat, longitude):
         print "Store : " + s_address.store.name + "distance : " + str(distance);
         if distance <= min_circle_radius:
             store_list.append(s_address.store)
+
     return store_list
