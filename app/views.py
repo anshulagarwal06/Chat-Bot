@@ -233,7 +233,7 @@ def sent_store_menu(senderId):
     # category1 = Category.objects.all()  # .only('id', 'category_name')
 
     for catObject in cat:
-        print "Anshul cat ; " + catObject
+        print "Anshul cat ; " + str(catObject)
 
     quick_replies = [];
     message = ""
