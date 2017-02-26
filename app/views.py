@@ -231,7 +231,6 @@ def sent_store_menu(senderId):
     cat = store_models.get_store_category(store)
 
     # category1 = Category.objects.all()  # .only('id', 'category_name')
-
     for catObject in cat:
         print "Anshul cat ; " + str(catObject)
 
@@ -240,8 +239,8 @@ def sent_store_menu(senderId):
     for catObject in cat:
         reply = {}
         reply['content_type'] = 'text'
-        reply['title'] = catObject.category_name
-        reply['payload'] = PAYLOAD_CATEGORY_QUICK_REPLY + str(catObject.id)
+        reply['title'] = catObject.product.Category.category_name;
+        reply['payload'] = PAYLOAD_CATEGORY_QUICK_REPLY + str(catObject.product.Category.id)
         quick_replies.append(reply)
         message = message + catObject.category_name + '\n'
 
