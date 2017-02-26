@@ -180,7 +180,7 @@ def map_store_to_customer(sender_id, store_id):
 
 def sent_category_product_list(sender_id, catergory_id):
     # get customers
-    customer = fetch_customer_location(sender_id)
+    customer = accounts.models.fetch_customers_details(sender_id)
 
     store = store_models.get_customers_store(customer);
     store_product = store_models.StoreProducts.objects.filter(store=store, product__Category__id=catergory_id);
