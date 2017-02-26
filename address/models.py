@@ -35,4 +35,4 @@ class CustomerAddress(models.Model):
         self.save();
 
     def __str__(self):
-        return self.user.name
+        return self.user.name + "default : " + str(self.default)

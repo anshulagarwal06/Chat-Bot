@@ -13,7 +13,7 @@ import cart.models as cart_models;
 from models import Category, Product
 from serializers import CategorySerializer, ProductSerializer
 from address.models import Addresses, CustomerAddress
-from store.models import get_stores, Store, StoreAddress
+from store.models import get_stores, Store
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)

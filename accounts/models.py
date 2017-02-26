@@ -15,8 +15,7 @@ class Customers(models.Model):
     fb_id = models.CharField(max_length=50, unique=True);
 
     def __str__(self):
-        return 'name : ' + self.name + ' email : ' + self.email + 'phone_number : ' + self.phone_number + \
-               'profile_picture : ' + self.profile_picture + 'fb_id : ' + self.fb_id
+        return 'name : ' + self.name
 
 
 def fetch_customers_details(sender_id):
@@ -43,5 +42,4 @@ def fetch_customers_details(sender_id):
             return None
 
     else:
-        print "Customer already added : "+customer.__str__();
         return customer;
