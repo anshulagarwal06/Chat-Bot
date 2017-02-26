@@ -242,7 +242,7 @@ def sent_store_menu(senderId):
         reply['title'] = catObject.product.Category.category_name;
         reply['payload'] = PAYLOAD_CATEGORY_QUICK_REPLY + str(catObject.product.Category.id)
         quick_replies.append(reply)
-        message = message + catObject.category_name + '\n'
+        message = message + catObject.product.Category.category_name + '\n'
 
     sentTextMessage(senderId, message, quick_replies=quick_replies);
 
