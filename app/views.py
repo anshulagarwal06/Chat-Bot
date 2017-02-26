@@ -13,12 +13,14 @@ import cart.models as cart_models;
 from models import Category, Product
 from serializers import CategorySerializer, ProductSerializer
 from address.models import Addresses, CustomerAddress
+from store.models import get_stores, Store, StoreAddress
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
 PAYLOAD_CATEGORY_QUICK_REPLY = "category_"
 PAYLOAD_PRODUCT_QUICK_REPLY = "product_"
+PAYLOAD_STORE_QUICK_REPLY = "store_"
 
 
 # Create your views here.
@@ -279,10 +281,38 @@ def handle_customer_location(sender_id, message, attachment):
 
     # get user
     customer = accounts.models.fetch_customers_details(sender_id);
+
+    # add customer address
     customer_address = CustomerAddress(user=customer, address=address);
     customer_address.create_customer_address();
 
+    # get near stores
+    nearby_stores = get_stores(lat, longitude);
+    show_nearby_stores(sender_id, nearby_stores);
+
     print "lat : " + str(lat) + "longitude : " + str(longitude)
+
+
+def show_nearby_stores(sender_id, stores):
+    if stores is not None and len(stores) > 0:
+        # sort stores based on distance (Min on priority )
+        message = "";
+        q_reply = [];
+        for store in stores:
+            reply = {}
+            reply['content_type'] = 'text'
+            reply['title'] = store.name
+            reply['payload'] = PAYLOAD_STORE_QUICK_REPLY + str(store.id)
+            q_reply.append(reply)
+            message = message + store.name + '\n'
+        sentTextMessage(sender_id, message, quick_replies=q_reply);
+
+    else:
+        sent_no_store_found(sender_id)
+
+
+def sent_no_store_found(sender_id):
+    sentTextMessage(sender_id, "No store found,in your location");
 
 
 @api_view(['GET', 'POST'])

@@ -27,3 +27,4 @@ virtualenv==15.0.3
 virtualenv-clone==0.2.6
 whitenoise==3.3.0
 psycopg2==2.6.2
+geopy==1.11.0
