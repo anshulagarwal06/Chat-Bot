@@ -69,6 +69,7 @@ def get_customers_store(customer):
 def get_store_category(store):
     products = StoreProducts.objects.filter(store_id=store.pk, active=True);
     distinct_cat = products.values_list('product__Category').distinct("product__Category_id");
+    print "distinct cat " + distinct_cat
     return distinct_cat;
 
 
