@@ -179,16 +179,22 @@ def map_store_to_customer(sender_id, store_id):
 
 
 def sent_category_product_list(sender_id, catergory_id):
-    product = Product.objects.filter(Category=catergory_id).all();
+    # get customers
+    customer = fetch_customer_location(sender_id)
+
+    store = store_models.get_customers_store(customer);
+    store_product = store_models.StoreProducts.objects.filter(store=store, product__Category__id=catergory_id);
+
+    # product = Product.objects.filter(Category=catergory_id).all();
     quick_replies = [];
     message = ""
-    for product_object in product:
+    for product_object in store_product:
         reply = {}
         reply['content_type'] = 'text'
-        reply['title'] = product_object.product_name
-        reply['payload'] = PAYLOAD_PRODUCT_QUICK_REPLY + str(product_object.id)
+        reply['title'] = product_object.product.product_name
+        reply['payload'] = PAYLOAD_PRODUCT_QUICK_REPLY + str(product_object.product.id)
         quick_replies.append(reply)
-        message = message + product_object.product_name + '\n'
+        message = message + product_object.product.product_name + '\n'
 
     sentTextMessage(sender_id, message, quick_replies=quick_replies);
 
