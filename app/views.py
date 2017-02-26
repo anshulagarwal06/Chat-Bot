@@ -13,7 +13,8 @@ import cart.models as cart_models;
 from models import Category, Product
 from serializers import CategorySerializer, ProductSerializer
 from address.models import Addresses, CustomerAddress
-from store.models import get_stores, Store
+from store.models import get_stores, Store, connect_store_to_customer
+import store.models as store_models;
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -121,6 +122,8 @@ def is_from_quick_reply(sender_id, message):
             return True;
         elif is_product_quick_reply(sender_id, message, quick_reply):
             return True;
+        elif is_select_store_quick_reply(sender_id, message, quick_reply):
+            return True;
         else:
             return False;
 
@@ -151,6 +154,28 @@ def is_product_quick_reply(sender_id, message, quick_reply):
             add_product_to_cart(sender_id, product_id);
             return True
     return False;
+
+
+def is_select_store_quick_reply(sender_id, message, quick_reply):
+    if quick_reply['payload']:
+        payload = quick_reply['payload'];
+        if payload.startswith(PAYLOAD_STORE_QUICK_REPLY, 0):
+            split_array = payload.split("_");
+            print "Quick reply : store id" + split_array[0] + split_array[1]
+            store_id = split_array[1]
+            map_store_to_customer(sender_id, store_id);
+            return True
+    return False;
+
+
+def map_store_to_customer(sender_id, store_id):
+    customer = accounts.models.fetch_customers_details(sender_id)
+
+    connect_store_to_customer(store_id, customer);
+
+    # show store menu
+
+    sent_store_menu(sender_id);
 
 
 def sent_category_product_list(sender_id, catergory_id):
@@ -196,13 +221,20 @@ def add_product_to_cart(sender_id, product_id, quantity=1):
 
 
 def sent_store_menu(senderId):
-    # get all categorise
+    # get customers
+    customer = accounts.models.fetch_customers_details(senderId);
 
-    category1 = Category.objects.all()  # .only('id', 'category_name')
+    # get customer's store
+    store = store_models.get_customers_store(customer);
+
+    # get store category
+    cat = store_models.get_store_category(store)
+
+    # category1 = Category.objects.all()  # .only('id', 'category_name')
 
     quick_replies = [];
     message = ""
-    for catObject in category1:
+    for catObject in cat:
         reply = {}
         reply['content_type'] = 'text'
         reply['title'] = catObject.category_name

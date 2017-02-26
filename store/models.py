@@ -1,6 +1,9 @@
 from __future__ import unicode_literals
 from django.db import models
 from address.models import Addresses
+from app.models import Product
+from accounts.models import Customers
+
 from geopy.distance import vincenty
 
 min_circle_radius = 200;
@@ -16,13 +19,23 @@ class Store(models.Model):
         return self.name
 
 
-# class StoreAddress(models.Model):
-#     store = models.OneToOneField(Store, on_delete=models.CASCADE)
-#     address = models.ForeignKey(Addresses, on_delete=models.CASCADE);
-#     create_at = models.DateTimeField(auto_now_add=True);
-#
-#     def __str__(self):
-#         return  self.store.name
+class StoreCustomer(models.Model):
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customers);
+
+    def __str__(self):
+        return self.customer.name
+
+
+class StoreProducts(models.Model):
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE);
+    create_at = models.DateTimeField(auto_now_add=True);
+    price = models.DecimalField(decimal_places=2, blank=False, null=False, max_digits=7)
+    active = models.BooleanField(default=True, blank=False)
+
+    def __str__(self):
+        return self.store.name + " , " + self.product.product_name
 
 
 def get_stores(lat, longitude):
@@ -46,3 +59,26 @@ def get_stores(lat, longitude):
             store_list.append(store)
 
     return store_list
+
+
+def get_customers_store(customer):
+    # get store that is connect to this customer
+    return StoreCustomer.objects.get(customer_id=customer.pk).store
+
+
+def get_store_category(store):
+    products = StoreProducts.objects.filter(store_id=store.pk, active=True);
+    distinct_cat = products.values_list('Category').distinct("Category_id");
+    return distinct_cat;
+
+
+def connect_store_to_customer(store_id, customer):
+    store = Store.objects.get(id=store_id)
+
+    try:
+        store_customer = StoreCustomer.objects.get(customer_id=customer.pk);
+        store_customer.store = store;
+        store_customer.save()
+    except StoreCustomer.DoesNotExist:
+        store_customer = StoreCustomer(store=store, customer=customer)
+        store_customer.save()
