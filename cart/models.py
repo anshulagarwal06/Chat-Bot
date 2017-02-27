@@ -11,6 +11,9 @@ class Cart(models.Model):
     user_id = models.ForeignKey(accounts.models.Customers, on_delete=models.CASCADE)
     create_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.user_id.name
+
 
 class CartLine(models.Model):
     product_id = models.ForeignKey(app_models.Product, on_delete=models.CASCADE)
@@ -18,6 +21,9 @@ class CartLine(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     modify_at = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(blank=False);
+
+    def __str__(self):
+        return self.cart_id.id + " , " + self.product_id.product_name
 
 
 def get_user_cart(customer):
@@ -42,6 +48,3 @@ def add_product_to_cartline(cart, product, quantity):
 def get_cart_line_items(cart):
     items = CartLine.objects.filter(cart_id=cart);
     return items
-
-    # cart_line = CartLine(cart_id=cart, product_id=product, quantity=quantity);
-    # cart_line.save();
