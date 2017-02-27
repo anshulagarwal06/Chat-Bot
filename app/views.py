@@ -68,7 +68,7 @@ def callSentAPI(data):
     requests.post(url, json=data);
 
 
-def sentTextMessage(recipientId, messageText, quick_replies=None):
+def sentTextMessage(recipientId, messageText, quick_replies=None, attachment=None):
     data = {}
     recipient = {};
 
@@ -79,6 +79,8 @@ def sentTextMessage(recipientId, messageText, quick_replies=None):
         message['text'] = messageText;
     if quick_replies:
         message['quick_replies'] = json.dumps(quick_replies)
+    if attachment:
+        message['attachment'] = json.dump(attachment);
 
     data['message'] = message
     data['recipient'] = recipient;
@@ -240,17 +242,48 @@ def sent_store_menu(senderId):
     for catObject in cat:
         print "Anshul cat ; " + str(catObject)
 
-    quick_replies = [];
-    message = ""
-    for catObject in cat:
-        reply = {}
-        reply['content_type'] = 'text'
-        reply['title'] = catObject.product.Category.category_name;
-        reply['payload'] = PAYLOAD_CATEGORY_QUICK_REPLY + str(catObject.product.Category.id)
-        quick_replies.append(reply)
-        message = message + catObject.product.Category.category_name + '\n'
+    # show generic template for menu (max element limit 10 (fb limit), ignoring this for now[POC])
 
-    sentTextMessage(senderId, message, quick_replies=quick_replies);
+    attachment = {}
+    attachment['type'] = "template"
+    payload = {};
+    payload['template_type'] = "generic"
+    elements = [];
+
+    for catObject in cat:
+        p_category = catObject.product.Category;
+        element = {};
+        element['title'] = p_category.category_name;
+        element[
+            'image_url'] = 'https://scontent.fdel1-2.fna.fbcdn.net/v/t31.0-8/16819206_1205196312912955_6951350097360556394_o.jpg?oh=70a9f22a3ed31ed7dc8908e3ac347970&oe=5926FE3D'
+
+        buttons = [];
+        button = {};
+        button['type'] = 'postback'
+        button['title'] = 'Show Products'
+        button['payload'] = PAYLOAD_CATEGORY_QUICK_REPLY + str(p_category.id)
+
+        buttons.append(button)
+
+        element['buttons'] = buttons;
+
+        elements.append(element);
+
+    payload['elements'] = elements;
+    attachment['payload'] = payload
+
+    # quick_replies = [];
+    # message = ""
+    # for catObject in cat:
+    #     reply = {}
+    #     reply['content_type'] = 'text'
+    #     reply['title'] = catObject.product.Category.category_name;
+    #     reply['payload'] = PAYLOAD_CATEGORY_QUICK_REPLY + str(catObject.product.Category.id)
+    #     quick_replies.append(reply)
+    #     message = message + catObject.product.Category.category_name + '\n'
+
+    message = "Please select category - "
+    sentTextMessage(senderId, message, attachment=attachment);
 
 
 def show_user_cart(sender_id):
