@@ -80,7 +80,7 @@ def sentTextMessage(recipientId, messageText, quick_replies=None, attachment=Non
     if quick_replies:
         message['quick_replies'] = json.dumps(quick_replies)
     if attachment:
-        message['attachment'] = json.dumps(attachment);
+        message['attachment'] = attachment;
 
     data['message'] = message
     data['recipient'] = recipient;
@@ -270,7 +270,7 @@ def sent_store_menu(senderId):
         elements.append(element);
 
     payload['elements'] = json.dumps(elements);
-    attachment['payload'] = json.dumps(payload);
+    attachment['payload'] = payload;
 
     # quick_replies = [];
     # message = ""
