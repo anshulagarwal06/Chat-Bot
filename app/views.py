@@ -269,7 +269,7 @@ def sent_store_menu(senderId):
         element['buttons'] = buttons;
         elements.append(element);
 
-    payload['elements'] = json.dumps(elements);
+    payload['elements'] = elements;
     attachment['payload'] = payload;
 
     # quick_replies = [];
