@@ -34,6 +34,9 @@ class StoreProducts(models.Model):
     price = models.DecimalField(decimal_places=2, blank=False, null=False, max_digits=7)
     active = models.BooleanField(default=True, blank=False)
 
+    class Meta:
+        unique_together = ('store', 'product')
+
     def __str__(self):
         return self.store.name + " , " + self.product.product_name
 
@@ -68,7 +71,7 @@ def get_customers_store(customer):
 
 def get_store_category(store):
     distinct_cat = StoreProducts.objects.filter(store_id=store.pk, active=True).distinct("product__Category_id");
-    #distinct_cat = products.values_list('product__Category').distinct("product__Category_id");
+    # distinct_cat = products.values_list('product__Category').distinct("product__Category_id");
     return distinct_cat;
 
 
