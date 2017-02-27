@@ -22,5 +22,5 @@ class Product(models.Model):
     Category = models.ForeignKey(Category, on_delete=models.CASCADE);
 
     def __str__(self):
-        return "product : " + self.product_name + " , " + str(self.price) + " , active : " + str(
+        return "product : " + self.product_name + " , active : " + str(
             self.is_active)
