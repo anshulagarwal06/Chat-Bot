@@ -265,12 +265,11 @@ def sent_store_menu(senderId):
 
         buttons.append(button)
 
-        element['buttons'] = buttons;
-
+        element['buttons'] = json.dumps(buttons);
         elements.append(element);
 
-    payload['elements'] = elements;
-    attachment['payload'] = payload
+    payload['elements'] = json.dumps(elements);
+    attachment['payload'] = json.dumps(payload);
 
     # quick_replies = [];
     # message = ""
