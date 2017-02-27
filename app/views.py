@@ -80,7 +80,7 @@ def sentTextMessage(recipientId, messageText, quick_replies=None, attachment=Non
     if quick_replies:
         message['quick_replies'] = json.dumps(quick_replies)
     if attachment:
-        message['attachment'] = json.dump(attachment);
+        message['attachment'] = json.dumps(attachment);
 
     data['message'] = message
     data['recipient'] = recipient;
