@@ -68,47 +68,15 @@ def index(request):
     return HttpResponse('<pre>' + 'Anshul' + '</pre>')
 
 
-# def callSentAPI(data):
-#     url = 'https://graph.facebook.com/v2.8/me/messages'
-#     url = url + "?" + "access_token=EAAWS4fk3smoBAIyUdqQbKZCjICHwr2ZAkVhM8oDOyppnZBoJLNeQ5IjeAUrlf5X3jYV0rxvZCs0eZABSH79eCpUBHeosZBPiB3QUYrYAP7kmgwfCS6DfTQZASj05RgmFRcdjSfXaVrpnZChcvQEUH1ZBY9GFCZAJb1g87ie4uBQcNQ1QZDZD"
-#     request = requests.post(url, json=data);
-#
-#     print request.url;
-#     print request.status_code;
-#     print request.text
-
-
-# def sentTextMessage(recipientId, messageText=None, quick_replies=None, attachment=None):
-#     data = {}
-#     recipient = {};
-#
-#     recipient['id'] = recipientId;
-#
-#     message = {}
-#     if messageText:
-#         message['text'] = messageText;
-#     if quick_replies:
-#         message['quick_replies'] = json.dumps(quick_replies)
-#     if attachment:
-#         message['attachment'] = attachment;
-#
-#     data['message'] = message
-#     data['recipient'] = recipient;
-#
-#     print json.dumps(data)
-#     # json_data = json.dumps(data)
-#     fbcalls.callSentAPI(data)
-
-
-def receivedMessage(event):
+def received_message(event):
     logger.info("Received message : ", event["message"]['mid'])
 
-    senderId = event["sender"]["id"];
+    sender_id = event["sender"]["id"];
 
     message = event['message'];
-    if is_from_quick_reply(senderId, message):
+    if is_from_quick_reply(sender_id, message):
         return;
-    elif is_has_attachment(senderId, message):
+    elif is_has_attachment(sender_id, message):
         return;
 
     if 'text' in message:
@@ -117,13 +85,13 @@ def receivedMessage(event):
         return
 
     if messageText.lower() == "menu":
-        sent_store_menu(senderId);
-    # elif messageText.lower() == "cart":
-    #     show_user_cart(senderId)
+        sent_store_menu(sender_id);
+    elif messageText.lower() == "cart":
+        logic.show_user_cart(sender_id)
     elif messageText.lower() == 'location':
-        fetch_customer_location(senderId)
+        fetch_customer_location(sender_id)
     else:
-        fbcalls.sentTextMessage(senderId, messageText + " awesome");
+        fbcalls.sentTextMessage(sender_id, messageText + " awesome");
 
 
 def is_from_quick_reply(sender_id, message):
@@ -212,7 +180,6 @@ def sent_category_product_list(sender_id, catergory_id):
     fbcalls.sentTextMessage(sender_id, message, quick_replies=quick_replies);
 
 
-
 def sent_store_menu(senderId):
     # get customers
     customer = accounts.models.fetch_customers_details(senderId);
@@ -269,36 +236,6 @@ def sent_store_menu(senderId):
 
     message = "Please select category - "
     fbcalls.sentTextMessage(senderId, attachment=attachment);
-
-
-def show_user_cart(sender_id):
-    # get customer object
-    customer = accounts.models.fetch_customers_details(sender_id)
-
-    # get customer cart
-    cart = cart_models.get_user_cart(customer);
-
-    # get all cart items
-    cart_lines = cart_models.get_cart_line_items(cart)
-
-    message = " Cart details -" + '\n\n'
-    count = 1;
-    total_price = 0
-    for items in cart_lines:
-        product = Product.objects.get(id=items.product_id.id);
-        name = product.product_name;
-        item_price = product.price;
-        quantity = items.quantity;
-        price = item_price * quantity
-
-        message = message + str(count) + ". " + name + "\t\t" + str(quantity) + "*" + str(item_price) + '\t\t' + str(
-            int(price)) + "\n\n"
-
-        total_price = total_price + price;
-        count += 1
-
-    message = message + "Total" + '\t\t\t' + str(total_price)
-    fbcalls.sentTextMessage(sender_id, message);
 
 
 def fetch_customer_location(sender_id):
@@ -404,7 +341,7 @@ def webhook(request):
                     if 'sender' in event:
                         accounts.models.fetch_customers_details(event['sender']['id']);
                     if 'message' in event and event["message"]:
-                        receivedMessage(event)
+                        received_message(event)
                     else:
                         logger.info("Not an message event : " + str(event))
 

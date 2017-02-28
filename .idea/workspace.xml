@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="43842b5c-86f9-4ed6-b54b-12d835dc27f9" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cart/migrations/0002_auto_20170228_0941.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cart/models.py" afterPath="$PROJECT_DIR$/cart/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/logic.py" afterPath="$PROJECT_DIR$/app/logic.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views.py" afterPath="$PROJECT_DIR$/app/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/store/models.py" afterPath="$PROJECT_DIR$/store/models.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -55,11 +56,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="166" column="23" lean-forward="false" selection-start-line="166" selection-start-column="23" selection-end-line="166" selection-end-column="23" />
+            <state relative-caret-position="318">
+              <caret line="78" column="23" lean-forward="false" selection-start-line="78" selection-start-column="23" selection-end-line="78" selection-end-column="23" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -82,8 +83,8 @@
       <file leaf-file-name="logic.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/logic.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="37" column="19" lean-forward="true" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
+            <state relative-caret-position="153">
+              <caret line="50" column="18" lean-forward="false" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="18" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -94,8 +95,8 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cart/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="28" lean-forward="true" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+            <state relative-caret-position="234">
+              <caret line="19" column="47" lean-forward="false" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -103,21 +104,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="0002_auto_20170228_0953.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cart/migrations/0002_auto_20170228_0953.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="21" column="34" lean-forward="true" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/store/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+            <state relative-caret-position="264">
+              <caret line="31" column="11" lean-forward="false" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="11" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -193,15 +184,15 @@
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/address/models.py" />
         <option value="$PROJECT_DIR$/store/admin.py" />
-        <option value="$PROJECT_DIR$/store/models.py" />
         <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/accounts/models.py" />
         <option value="$PROJECT_DIR$/app/const.py" />
         <option value="$PROJECT_DIR$/app/fbcalls.py" />
         <option value="$PROJECT_DIR$/app/postback.py" />
-        <option value="$PROJECT_DIR$/app/views.py" />
-        <option value="$PROJECT_DIR$/app/logic.py" />
         <option value="$PROJECT_DIR$/cart/models.py" />
+        <option value="$PROJECT_DIR$/store/models.py" />
+        <option value="$PROJECT_DIR$/app/logic.py" />
+        <option value="$PROJECT_DIR$/app/views.py" />
       </list>
     </option>
   </component>
@@ -781,11 +772,6 @@
           <line>31</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/views.py</url>
-          <line>287</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
       </breakpoints>
       <option name="time" value="4" />
     </breakpoint-manager>
@@ -1135,26 +1121,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="166" column="23" lean-forward="false" selection-start-line="166" selection-start-column="23" selection-end-line="166" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/logic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="37" column="19" lean-forward="true" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cart/migrations/0002_auto_20170228_0941.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -1163,10 +1129,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cart/migrations/0002_auto_20170228_0953.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/store/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+        <state relative-caret-position="264">
+          <caret line="31" column="11" lean-forward="false" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="11" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -1175,19 +1149,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cart/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="28" lean-forward="true" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+        <state relative-caret-position="234">
+          <caret line="19" column="47" lean-forward="false" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cart/migrations/0002_auto_20170228_0953.py">
+    <entry file="file://$PROJECT_DIR$/app/logic.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="21" column="34" lean-forward="true" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
-          <folding />
+        <state relative-caret-position="153">
+          <caret line="50" column="18" lean-forward="false" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="78" column="23" lean-forward="false" selection-start-line="78" selection-start-column="23" selection-end-line="78" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
