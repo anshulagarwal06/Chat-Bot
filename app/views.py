@@ -116,8 +116,8 @@ def receivedMessage(event):
 
     if messageText.lower() == "menu":
         sent_store_menu(senderId);
-    elif messageText.lower() == "cart":
-        show_user_cart(senderId)
+    # elif messageText.lower() == "cart":
+    #     show_user_cart(senderId)
     elif messageText.lower() == 'location':
         fetch_customer_location(senderId)
     else:
