@@ -249,24 +249,25 @@ def sent_store_menu(senderId):
     attachment['type'] = "template"
     payload = {};
     payload['template_type'] = "generic"
+
     elements = [];
 
     for catObject in cat:
         p_category = catObject.product.Category;
         element = {};
         element['title'] = p_category.category_name;
-        # element[
-        #     'image_url'] = 'https://scontent.fdel1-2.fna.fbcdn.net/v/t31.0-8/16819206_1205196312912955_6951350097360556394_o.jpg?oh=70a9f22a3ed31ed7dc8908e3ac347970&oe=5926FE3D'
-        #
-        # button = {};
-        # button['type'] = 'postback'
-        # button['title'] = 'Show Products'
-        # button['payload'] = PAYLOAD_CATEGORY_QUICK_REPLY + str(p_category.id)
-        #
-        # buttons = [];
-        # buttons.append(button)
-        #
-        # element['buttons'] = buttons;
+        element[
+            'image_url'] = 'https://scontent.fdel1-2.fna.fbcdn.net/v/t31.0-8/16819206_1205196312912955_6951350097360556394_o.jpg?oh=70a9f22a3ed31ed7dc8908e3ac347970&oe=5926FE3D'
+
+        button = {};
+        button['type'] = 'postback'
+        button['title'] = 'Show Products'
+        button['payload'] = PAYLOAD_CATEGORY_QUICK_REPLY + str(p_category.id)
+
+        buttons = [];
+        buttons.append(button)
+
+        element['buttons'] = buttons;
         elements.append(element);
 
     payload['elements'] = elements;
