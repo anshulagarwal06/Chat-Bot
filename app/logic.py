@@ -88,6 +88,10 @@ def handle_getting_start(sender_id):
 
     fbcalls.sentTextMessage(sender_id, message);
 
+    ask_for_user_location(sender_id)
+
+
+def ask_for_user_location(sender_id):
     message = "Just tell me where you are. I will show all store at your location.\n"
     message = message + "Type 'Location' to open location dialog."
 

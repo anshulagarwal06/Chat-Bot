@@ -106,7 +106,7 @@ def is_from_quick_reply(sender_id, message):
             return True;
         elif is_select_store_quick_reply(sender_id, message, quick_reply):
             return True;
-        elif quick_r.is_ignore_qr(sender_id,message,quick_reply):
+        elif quick_r.is_ignore_qr(sender_id, message, quick_reply):
             return True
         else:
             return False;
@@ -188,7 +188,13 @@ def sent_store_menu(senderId):
     customer = accounts.models.fetch_customers_details(senderId);
 
     # get customer's store
-    store = store_models.get_customers_store(customer);
+    try:
+        store = store_models.get_customers_store(customer);
+    except store_models.StoreCustomer.DoesNotExist:
+        message = "You have not selected any food place."
+        fbcalls.sentTextMessage(senderId, message);
+        logic.ask_for_user_location(senderId);
+        return;
 
     # get store category
     cat = store_models.get_store_category(store)
@@ -203,7 +209,7 @@ def sent_store_menu(senderId):
     attachment['type'] = "template"
     payload = {};
     payload['template_type'] = "generic"
-    payload['image_aspect_ratio']="square"
+    payload['image_aspect_ratio'] = "square"
 
     elements = [];
 
