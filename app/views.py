@@ -430,7 +430,7 @@ def webhook(request):
                     if 'message' in event and event["message"]:
                         receivedMessage(event)
                     else:
-                        logger.info("Not an message event : " + event)
+                        logger.info("Not an message event : " + str(event))
 
                     # postback url call
                     if 'postback' in event and event['postback']:
