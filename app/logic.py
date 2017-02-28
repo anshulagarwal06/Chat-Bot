@@ -65,7 +65,7 @@ def show_user_cart(sender_id):
         store_product = StoreProducts.objects.get(id=items.store_product.id);
         product = store_product.product
         name = product.product_name;
-        item_price = product.price;
+        item_price = store_product.price;
         quantity = items.quantity;
         price = item_price * quantity
 
