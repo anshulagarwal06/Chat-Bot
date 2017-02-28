@@ -200,6 +200,7 @@ def sent_store_menu(senderId):
     attachment['type'] = "template"
     payload = {};
     payload['template_type'] = "generic"
+    payload['image_aspect_ratio']="square"
 
     elements = [];
 

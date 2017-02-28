@@ -43,7 +43,7 @@ def add_product_to_cart(sender_id, product_id, quantity=1):
     # create cart line item
     cart_models.add_product_to_cartline(cart, store_product, quantity)
 
-    message = "Successfully added to your cart.\nType \"Cart\" to see your cart."
+    message = "Successfully added to your cart.\n\nType \"Cart\" to see your cart."
 
     fbcalls.sentTextMessage(sender_id, message);
 

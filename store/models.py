@@ -6,7 +6,7 @@ from accounts.models import Customers
 
 from geopy.distance import vincenty
 
-min_circle_radius = 200;
+min_circle_radius = 500;
 
 
 # Create your models here.
