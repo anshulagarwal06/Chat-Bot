@@ -1,6 +1,9 @@
+import accounts
 import accounts.models as account_models
 import store.models as store_models
+import cart.models as cart_models
 import fbcalls
+
 from const import *
 
 
@@ -18,8 +21,27 @@ def handle_category_reply(sender_id, category_id):
         reply = {}
         reply['content_type'] = 'text'
         reply['title'] = product_object.product.product_name
-        reply['payload'] = PAYLOAD_PRODUCT_QUICK_REPLY + str(product_object.product.id)
+        reply['payload'] = PAYLOAD_PRODUCT_QUICK_REPLY + str(product_object.id)
         quick_replies.append(reply)
         message = message + product_object.product.product_name + '\n'
 
     fbcalls.sentTextMessage(sender_id, message, quick_replies=quick_replies);
+
+
+def add_product_to_cart(sender_id, product_id, quantity=1):
+    # get product object
+    store_product = store_models.StoreProducts.objects.get(id=product_id);
+
+    # get user from sender_id:
+    customer = accounts.models.fetch_customers_details(sender_id);
+
+    # get user cart
+    # delete check will be added later
+    cart = cart_models.get_user_cart(customer=customer)
+
+    # create cart line item
+    cart_models.add_product_to_cartline(cart, store_product, quantity)
+
+    message = "Successfully added to your cart. \n Type \"cart\" to see your cart."
+
+    fbcalls.sentTextMessage(sender_id, message);

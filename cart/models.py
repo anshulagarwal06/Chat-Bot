@@ -5,6 +5,7 @@ from django.db import models
 # Create your models here.
 import accounts.models
 from app import models as app_models
+from store.models import StoreProducts
 
 
 class Cart(models.Model):
@@ -16,14 +17,14 @@ class Cart(models.Model):
 
 
 class CartLine(models.Model):
-    product_id = models.ForeignKey(app_models.Product, on_delete=models.CASCADE)
+    product_id = models.ForeignKey(StoreProducts, on_delete=models.CASCADE)
     cart_id = models.ForeignKey(Cart, on_delete=models.CASCADE);
     create_at = models.DateTimeField(auto_now_add=True)
     modify_at = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(blank=False);
 
     def __str__(self):
-        return self.cart_id.id + " , " + self.product_id.product_name
+        return str(self.cart_id.id) + " , " + self.product_id.product.product_name
 
 
 def get_user_cart(customer):
@@ -35,13 +36,13 @@ def get_user_cart(customer):
     return cart
 
 
-def add_product_to_cartline(cart, product, quantity):
+def add_product_to_cartline(cart, store_product, quantity):
     try:
-        cart_line = CartLine.objects.get(cart_id=cart, product_id=product)
+        cart_line = CartLine.objects.get(cart_id=cart, product_id=store_product)
         cart_line.quantity = cart_line.quantity + quantity;
         cart_line.save();
     except CartLine.DoesNotExist:
-        cart_line = CartLine(cart_id=cart, product_id=product, quantity=quantity);
+        cart_line = CartLine(cart_id=cart, product_id=store_product, quantity=quantity);
         cart_line.save();
 
 

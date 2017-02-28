@@ -10,6 +10,7 @@ from rest_framework.response import Response
 
 import accounts.models;
 import cart.models as cart_models;
+from app import logic
 from app.postback import received_postback
 from models import Category, Product
 from serializers import CategorySerializer, ProductSerializer
@@ -17,8 +18,9 @@ from address.models import Addresses, CustomerAddress
 from store.models import get_stores, Store, connect_store_to_customer
 import store.models as store_models;
 from const import *
-#from fbcalls import *
+# from fbcalls import *
 import fbcalls
+
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
@@ -162,7 +164,7 @@ def is_product_quick_reply(sender_id, message, quick_reply):
             split_array = payload.split("_");
             print "Product quick " + split_array[0] + split_array[1]
             product_id = split_array[1]
-            add_product_to_cart(sender_id, product_id);
+            logic.add_product_to_cart(sender_id, product_id);
             return True
     return False;
 
@@ -209,32 +211,6 @@ def sent_category_product_list(sender_id, catergory_id):
 
     fbcalls.sentTextMessage(sender_id, message, quick_replies=quick_replies);
 
-
-def add_product_to_cart(sender_id, product_id, quantity=1):
-    # get product object
-    product = Product.objects.get(id=product_id);
-
-    # get user from sender_id:
-    customer = accounts.models.fetch_customers_details(sender_id);
-
-    # get user cart
-    # delete check will be added later
-    cart = cart_models.get_user_cart(customer=customer)
-
-    # create cart line item
-
-    cart_models.add_product_to_cartline(cart, product, quantity)
-
-    # quick_replies = [];
-    message = "Successfull added."
-    # reply = {}
-    # reply['content_type'] = 'text'
-    # reply['title'] = product.product_name
-    # reply['payload'] = PAYLOAD_PRODUCT_QUICK_REPLY + str(product.id)
-    # quick_replies.append(reply)
-    # message = message + product.product_name + '\n'
-
-    fbcalls.sentTextMessage(sender_id, message);
 
 
 def sent_store_menu(senderId):
