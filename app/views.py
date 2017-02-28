@@ -85,7 +85,7 @@ def sentTextMessage(recipientId, messageText, quick_replies=None, attachment=Non
     data['message'] = message
     data['recipient'] = recipient;
 
-    print str(data)
+    print json.dumps(data)
     # json_data = json.dumps(data)
     callSentAPI(data)
 
