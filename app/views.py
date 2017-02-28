@@ -65,15 +65,14 @@ def index(request):
 def callSentAPI(data):
     url = 'https://graph.facebook.com/v2.6/me/messages'
     url = url + "?" + "access_token=EAAWS4fk3smoBAIyUdqQbKZCjICHwr2ZAkVhM8oDOyppnZBoJLNeQ5IjeAUrlf5X3jYV0rxvZCs0eZABSH79eCpUBHeosZBPiB3QUYrYAP7kmgwfCS6DfTQZASj05RgmFRcdjSfXaVrpnZChcvQEUH1ZBY9GFCZAJb1g87ie4uBQcNQ1QZDZD"
-    request=requests.post(url, json=data);
+    request = requests.post(url, json=data);
 
     print request.url;
     print request.status_code;
     print request.text
 
 
-
-def sentTextMessage(recipientId, messageText, quick_replies=None, attachment=None):
+def sentTextMessage(recipientId, messageText=None, quick_replies=None, attachment=None):
     data = {}
     recipient = {};
 
@@ -289,7 +288,7 @@ def sent_store_menu(senderId):
     #     message = message + catObject.product.Category.category_name + '\n'
 
     message = "Please select category - "
-    sentTextMessage(senderId, message, attachment=attachment);
+    sentTextMessage(senderId, attachment=attachment);
 
 
 def show_user_cart(sender_id):
