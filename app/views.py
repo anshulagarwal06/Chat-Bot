@@ -20,6 +20,7 @@ import store.models as store_models;
 from const import *
 # from fbcalls import *
 import fbcalls
+import quick_reply as quick_r
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -105,6 +106,8 @@ def is_from_quick_reply(sender_id, message):
             return True;
         elif is_select_store_quick_reply(sender_id, message, quick_reply):
             return True;
+        elif quick_r.is_ignore_qr(sender_id,message,quick_reply):
+            return True
         else:
             return False;
 

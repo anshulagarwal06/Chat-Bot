@@ -15,3 +15,5 @@ def handle_payload(sender_id, payload):
         print "Category" + split_array[0] + split_array[1]
         category_id = split_array[1]
         logic.handle_category_reply(sender_id, category_id);
+    elif payload.startswith(PAYLOAD_GETTING_START_BUTTON_CLICK, 0):
+        logic.handle_getting_start(sender_id);

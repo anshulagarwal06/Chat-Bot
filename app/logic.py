@@ -4,6 +4,7 @@ import store.models as store_models
 import cart.models as cart_models
 from cart.models import StoreProducts
 import fbcalls
+from quick_reply import get_quick_reply_object
 
 from const import *
 
@@ -77,3 +78,22 @@ def show_user_cart(sender_id):
 
     message = message + "Total" + '\t\t\t' + str(total_price)
     fbcalls.sentTextMessage(sender_id, message);
+
+
+def handle_getting_start(sender_id):
+    customer = accounts.models.fetch_customers_details(sender_id);
+
+    message = "Hi " + customer.name + "\n";
+    message = message + "I am Robo, Your personal food ordering bot."
+
+    fbcalls.sentTextMessage(sender_id, message);
+
+    message = "Just tell me where you are. I will show all store at your location.\n"
+    message = message + "Type 'Location' to open location dialog."
+
+    fbcalls.sentTextMessage(sender_id, message);
+
+    quick_reply = [];
+    quick_reply.append(get_quick_reply_object(TYPE_QUICK_REPLY_LOCATION));
+    quick_reply.append(get_quick_reply_object(TYPE_QUICK_REPLY_IGNORE))
+    fbcalls.sentTextMessage(sender_id, quick_replies=quick_reply)
