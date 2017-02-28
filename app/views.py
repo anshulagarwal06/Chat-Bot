@@ -10,18 +10,22 @@ from rest_framework.response import Response
 
 import accounts.models;
 import cart.models as cart_models;
+from app.postback import received_postback
 from models import Category, Product
 from serializers import CategorySerializer, ProductSerializer
 from address.models import Addresses, CustomerAddress
 from store.models import get_stores, Store, connect_store_to_customer
 import store.models as store_models;
-
+from const import *
+#from fbcalls import *
+import fbcalls
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
-PAYLOAD_CATEGORY_QUICK_REPLY = "category_"
-PAYLOAD_PRODUCT_QUICK_REPLY = "product_"
-PAYLOAD_STORE_QUICK_REPLY = "store_"
+
+# PAYLOAD_CATEGORY_QUICK_REPLY = "category_"
+# PAYLOAD_PRODUCT_QUICK_REPLY = "product_"
+# PAYLOAD_STORE_QUICK_REPLY = "store_"
 
 
 # Create your views here.
@@ -62,36 +66,36 @@ def index(request):
     return HttpResponse('<pre>' + 'Anshul' + '</pre>')
 
 
-def callSentAPI(data):
-    url = 'https://graph.facebook.com/v2.8/me/messages'
-    url = url + "?" + "access_token=EAAWS4fk3smoBAIyUdqQbKZCjICHwr2ZAkVhM8oDOyppnZBoJLNeQ5IjeAUrlf5X3jYV0rxvZCs0eZABSH79eCpUBHeosZBPiB3QUYrYAP7kmgwfCS6DfTQZASj05RgmFRcdjSfXaVrpnZChcvQEUH1ZBY9GFCZAJb1g87ie4uBQcNQ1QZDZD"
-    request = requests.post(url, json=data);
+# def callSentAPI(data):
+#     url = 'https://graph.facebook.com/v2.8/me/messages'
+#     url = url + "?" + "access_token=EAAWS4fk3smoBAIyUdqQbKZCjICHwr2ZAkVhM8oDOyppnZBoJLNeQ5IjeAUrlf5X3jYV0rxvZCs0eZABSH79eCpUBHeosZBPiB3QUYrYAP7kmgwfCS6DfTQZASj05RgmFRcdjSfXaVrpnZChcvQEUH1ZBY9GFCZAJb1g87ie4uBQcNQ1QZDZD"
+#     request = requests.post(url, json=data);
+#
+#     print request.url;
+#     print request.status_code;
+#     print request.text
 
-    print request.url;
-    print request.status_code;
-    print request.text
 
-
-def sentTextMessage(recipientId, messageText=None, quick_replies=None, attachment=None):
-    data = {}
-    recipient = {};
-
-    recipient['id'] = recipientId;
-
-    message = {}
-    if messageText:
-        message['text'] = messageText;
-    if quick_replies:
-        message['quick_replies'] = json.dumps(quick_replies)
-    if attachment:
-        message['attachment'] = attachment;
-
-    data['message'] = message
-    data['recipient'] = recipient;
-
-    print json.dumps(data)
-    # json_data = json.dumps(data)
-    callSentAPI(data)
+# def sentTextMessage(recipientId, messageText=None, quick_replies=None, attachment=None):
+#     data = {}
+#     recipient = {};
+#
+#     recipient['id'] = recipientId;
+#
+#     message = {}
+#     if messageText:
+#         message['text'] = messageText;
+#     if quick_replies:
+#         message['quick_replies'] = json.dumps(quick_replies)
+#     if attachment:
+#         message['attachment'] = attachment;
+#
+#     data['message'] = message
+#     data['recipient'] = recipient;
+#
+#     print json.dumps(data)
+#     # json_data = json.dumps(data)
+#     fbcalls.callSentAPI(data)
 
 
 def receivedMessage(event):
@@ -117,7 +121,7 @@ def receivedMessage(event):
     elif messageText.lower() == 'location':
         fetch_customer_location(senderId)
     else:
-        sentTextMessage(senderId, messageText + " awesome");
+        fbcalls.sentTextMessage(senderId, messageText + " awesome");
 
 
 def is_from_quick_reply(sender_id, message):
@@ -203,7 +207,7 @@ def sent_category_product_list(sender_id, catergory_id):
         quick_replies.append(reply)
         message = message + product_object.product.product_name + '\n'
 
-    sentTextMessage(sender_id, message, quick_replies=quick_replies);
+    fbcalls.sentTextMessage(sender_id, message, quick_replies=quick_replies);
 
 
 def add_product_to_cart(sender_id, product_id, quantity=1):
@@ -230,7 +234,7 @@ def add_product_to_cart(sender_id, product_id, quantity=1):
     # quick_replies.append(reply)
     # message = message + product.product_name + '\n'
 
-    sentTextMessage(sender_id, message);
+    fbcalls.sentTextMessage(sender_id, message);
 
 
 def sent_store_menu(senderId):
@@ -288,7 +292,7 @@ def sent_store_menu(senderId):
     #     message = message + catObject.product.Category.category_name + '\n'
 
     message = "Please select category - "
-    sentTextMessage(senderId, attachment=attachment);
+    fbcalls.sentTextMessage(senderId, attachment=attachment);
 
 
 def show_user_cart(sender_id):
@@ -318,7 +322,7 @@ def show_user_cart(sender_id):
         count += 1
 
     message = message + "Total" + '\t\t\t' + str(total_price)
-    sentTextMessage(sender_id, message);
+    fbcalls.sentTextMessage(sender_id, message);
 
 
 def fetch_customer_location(sender_id):
@@ -327,7 +331,7 @@ def fetch_customer_location(sender_id):
     reply = {}
     reply['content_type'] = 'location'
     quick_replies.append(reply)
-    sentTextMessage(sender_id, message, quick_replies=quick_replies);
+    fbcalls.sentTextMessage(sender_id, message, quick_replies=quick_replies);
 
 
 def is_has_attachment(sender_id, message):
@@ -383,7 +387,7 @@ def show_nearby_stores(sender_id, stores):
             reply['payload'] = PAYLOAD_STORE_QUICK_REPLY + str(store.id)
             q_reply.append(reply)
             message = message + store.name + '\n'
-        sentTextMessage(sender_id, message, quick_replies=q_reply);
+        fbcalls.sentTextMessage(sender_id, message, quick_replies=q_reply);
 
     else:
         print stores;
@@ -391,7 +395,7 @@ def show_nearby_stores(sender_id, stores):
 
 
 def sent_no_store_found(sender_id):
-    sentTextMessage(sender_id, "No store found,in your location");
+    fbcalls.sentTextMessage(sender_id, "No store found,in your location");
 
 
 @api_view(['GET', 'POST'])
@@ -423,10 +427,14 @@ def webhook(request):
                 for event in entry["messaging"]:
                     if 'sender' in event:
                         accounts.models.fetch_customers_details(event['sender']['id']);
-                    if event["message"]:
+                    if 'message' in event and event["message"]:
                         receivedMessage(event)
                     else:
                         logger.info("Not an message event : " + event)
+
+                    # postback url call
+                    if 'postback' in event and event['postback']:
+                        received_postback(event)
 
             return HttpResponse(status=status.HTTP_200_OK)
         else:
